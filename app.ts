@@ -26,6 +26,10 @@ app.use(express.json())
 const swaggerDocs = swaggerJsDoc(swaggerOption);
 app.use("/api_docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs))
 
+app.get('/', (req: Request, res: Response, next: NextFunction) => {
+    res.send("index~")
+})
+
 app.get('/healthcheck', (req: Request, res: Response, next: NextFunction) => {
     res.send("Hello")
 })
@@ -39,20 +43,24 @@ app.get('/healthcheck', (req: Request, res: Response, next: NextFunction) => {
  *       - in: path
  *         name: path
  *         required: true
- *         decription: derivation path, for more details: https://learnmeabitcoin.com/technical/derivation-paths
+ *         description: derivation path, for more details https://learnmeabitcoin.com/technical/derivation-paths
  *         schema:
  *             type: string
  *         example: "m/44'/60'/0'/0/0"
  *       - in: path
  *         name: seed_phase
  *         required: true
- *         decription: mnemonic for master key pair
+ *         description: mnemonic for master key pair
  *         schema:
  *             type: string
  *         example: "recycle manual power sense program car car toy judge response wave chicken"
  *     responses:
  *       200:
  *         description: OK
+ *       412:
+ *         description: input invalid
+ *       500:
+ *         description: internal server error
  */
 app.get('/hd_segwit_address/:seed_phase/:path', (req: Request, res: Response, next: NextFunction) => {
     let seedPhase: string = ""
@@ -98,27 +106,31 @@ app.get('/hd_segwit_address/:seed_phase/:path', (req: Request, res: Response, ne
  *       - in: path
  *         name: n
  *         required: true
- *         decription: minimum number of private keys to unlock UTXO
+ *         description: minimum number of private keys to unlock UTXO
  *         schema:
  *             type: integer
  *         example: 2
  *       - in: path
  *         name: m
  *         required: true
- *         decription: total number of key pairs
+ *         description: total number of key pairs
  *         schema:
  *             type: integer
  *         example: 3
  *       - in: path
  *         name: public_keys
  *         required: true
- *         decription: array of public keys, length should be same as n, splited by ","
+ *         description: array of public keys, length should be same as n, splited by ","
  *         schema:
  *             type: string
  *         example: "02e135e12b4417b41e92e738448cb51581c70f14bf885b0d4056ac2c3cc5c8729c,022015b568fb0f2f792e2e1d230a7f64e8a75b5d4a3ae549b55c3724cdc148b32c,02799dc04a8acf04e793ff0f2c35c20c0388529eb964c565a455f13c07123c9ea2"
  *     responses:
  *       200:
  *         description: OK
+ *       412:
+ *         description: input invalid
+ *       500:
+ *         description: internal server error
  */
 app.get('/p2sh_address/:n/:m/:public_keys', (req: Request, res: Response, next:NextFunction) => {
     let n: number = 0
