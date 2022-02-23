@@ -54,9 +54,9 @@ Including api call tests and function tests with successful cases and failed cas
 
 # Demo and example
 While server is running locally, click on "Try it out" and "Execute":
-**http://localhost:5000/api_docs/#/default/get_hd_segwit_address__seed_phase___path_**
+**http://localhost:5000/api_docs/#/default/get_hd_segwit_address__seed_phase___path_/**
 
-**http://localhost:5000/api_docs/#/default/get_p2sh_address__n___m___public_keys_**
+**http://localhost:5000/api_docs/#/default/get_p2sh_address__n___m___public_keys_/**
 
 or use postman with parameters similar to api_docs examples.
 
