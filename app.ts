@@ -39,7 +39,7 @@ app.get('/healthcheck', (req: Request, res: Response, next: NextFunction) => {
  *       - in: path
  *         name: path
  *         required: true
- *         decription: derivation path
+ *         decription: derivation path, for more details: https://learnmeabitcoin.com/technical/derivation-paths
  *         schema:
  *             type: string
  *         example: "m/44'/60'/0'/0/0"
@@ -65,7 +65,6 @@ app.get('/hd_segwit_address/:seed_phase/:path', (req: Request, res: Response, ne
         res.status(412).send("input parameters type invalid, please check api document by /api-docs")
         return
     }
-    console.log(path);
     
     
     let errMsg = HDSegwitAddressGenerator.checkPath(path)
@@ -134,10 +133,6 @@ app.get('/p2sh_address/:n/:m/:public_keys', (req: Request, res: Response, next:N
         res.status(412).send("input parametes type invalid, please check api document by /api-docs")
         return
     }
-    console.log(n);
-    console.log(m);
-    
-    console.log(publicKeys);
     
     
     let errMsg = MultiSigP2SHAddressGenerator.checkParams(n, m, publicKeys)
@@ -160,6 +155,6 @@ app.get('/p2sh_address/:n/:m/:public_keys', (req: Request, res: Response, next:N
 
 })
 
-app.listen(5000, () => console.log("server running"))
+app.listen(5000, () => console.log("server running on port 5000"))
 
 export default app
