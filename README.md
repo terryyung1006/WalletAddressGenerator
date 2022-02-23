@@ -26,6 +26,12 @@ https://github.com/bitcoin/bips/blob/master/bip-0084.mediawiki
 * P2SH solve the runtime issue caused by length of keys for multi-sig addresses transaction
 https://github.com/bitcoin/bips/blob/master/bip-0067.mediawiki
 
+# Installation
+Install dependencies
+```
+npm install
+```
+
 # Usage
 Run for development using nodemon
 ```
@@ -47,14 +53,14 @@ npm run test
 Including api call tests and function tests with successful cases and failed cases with invalid input parameters.
 
 # Demo and example
-While server is running locally, click on "Try it out":
+While server is running locally, click on "Try it out" and "Execute":
 **http://localhost:8000/api_docs/#/default/get_hd_segwit_address__seed_phase___path_**
-&
+
 **http://localhost:8000/api_docs/#/default/get_p2sh_address__n___m___public_keys_**
 
 or use postman with parameters similar to api_docs examples.
 
 # Potential Improvement
-add passphase for Mnemonic Seed Sync
-single responsibility func
-CICD pipeline
+* Add passphase for Mnemonic Seed Sync
+* Functions in src folder can be devided for single responsibility
+* CICD pipeline can be set for deployment automation
