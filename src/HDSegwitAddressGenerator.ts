@@ -40,7 +40,7 @@ export function checkPath(path: string): string{
 }
 
 /**
- * @description Generate native segwit address  (prefix "bc1")
+ * @description Generate native segwit bitcoin address  (prefix "bc1")
  * 
  * @param seedPhase mnemonic for master key pair
  * @param path derivation path for child key pair
@@ -52,7 +52,6 @@ export function generateSegwitAddress(seedPhase: string, path: string): string |
     
     const seed = bip39.mnemonicToSeedSync(seedPhase)
     const root = bip32.fromSeed(seed)
-
     const child = root.derivePath(path)
 
     const { address } = bitcoinLib.payments.p2wpkh({

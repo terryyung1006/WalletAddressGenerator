@@ -1,9 +1,16 @@
 import * as bitcoinLib from 'bitcoinjs-lib'
-import { bitcoin } from 'bitcoinjs-lib/src/networks'
 
-export function checkParams(m: number, n: number, publicKeys: Array<string>): string{
-    if (m > n) {
-        const errMsg = "param m must be greater than n"
+/**
+ * @description check if params of generateMultiSigP2SHAddress valid
+ * 
+ * @param n minimum number of private keys to unlock UTXO
+ * @param m total number of key pairs
+ * @param publicKeys array of public keys, length should be same as n
+ * @returns 
+ */
+export function checkParams(n: number, m: number, publicKeys: Array<string>): string{
+    if (n > m) {
+        const errMsg = "param m must be greater or equals to n"
         console.error(errMsg)
         return errMsg
     }
@@ -12,7 +19,7 @@ export function checkParams(m: number, n: number, publicKeys: Array<string>): st
         console.error(errMsg)
         return errMsg
     }
-    if (n != publicKeys.length) {
+    if (m != publicKeys.length) {
         const errMsg = "length of public keys must equal to n"
         console.error(errMsg)
         return errMsg
@@ -21,21 +28,29 @@ export function checkParams(m: number, n: number, publicKeys: Array<string>): st
     return ""
 }
 
-export function generateMultiSigP2SHAddress(m: number, n: number, publicKeys: Array<string>): string | undefined{
-    if (checkParams(m, n, publicKeys) != "") {
+/**
+ * @description Generate Pay-to-Script-Hash(P2SH) bitcoin address(prefix "3") with Pay-to-multisig address (n out of m).
+ * 
+ * @param n minimum number of private keys to unlock UTXO
+ * @param m total number of key pairs
+ * @param publicKeys array of public keys, length should be same as n
+ * @returns 
+ */
+export function generateMultiSigP2SHAddress(n: number, m: number, publicKeys: Array<string>): string | undefined{
+    if (checkParams( n, m, publicKeys) != "") {
         return undefined
     }
 
     const pubkeysBuffer: Buffer[] = publicKeys.map(hex => Buffer.from(hex, 'hex'))
     
-    if (pubkeysBuffer.length <= 0 || pubkeysBuffer.length != n) {
-        console.error("public key buffer not equal to param n")
+    if (pubkeysBuffer.length <= 0 || pubkeysBuffer.length != m) {
+        console.error("public key buffer not equal to param m")
         return undefined
     }
 
     const { address } = bitcoinLib.payments.p2sh({
         redeem: bitcoinLib.payments.p2ms({
-            m,
+            m: n,
             pubkeys: pubkeysBuffer
         })
     })
