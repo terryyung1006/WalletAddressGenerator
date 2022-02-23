@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "test": "jest",
     "start": "node dist/app.js",
     "dev": "nodemon ./app.ts",
     "build": "tsc -p ."
