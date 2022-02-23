@@ -23,23 +23,6 @@ export function checkSeedPhase(seedPhase: string): string{
 }
 
 /**
- * @description Check if derivation path has 6 levels
- * 
- * @param path derivation path to be checked
- * @returns empty string if passed
- */
-export function checkPath(path: string): string{
-    let pathArray: Array<string> = path.split("/")
-    
-    if (pathArray.length != 6) {
-        const errMsg = "derivation path must has 6 level"
-        console.error(errMsg)
-        return errMsg
-    }
-    return ""
-}
-
-/**
  * @description Generate native segwit bitcoin address  (prefix "bc1")
  * 
  * @param seedPhase mnemonic for master key pair
@@ -47,12 +30,18 @@ export function checkPath(path: string): string{
  * @returns Segwit address
  */
 export function generateSegwitAddress(seedPhase: string, path: string): string | undefined {
-    if (!!checkSeedPhase(seedPhase) || !!checkPath(path))
+    if (!!checkSeedPhase(seedPhase) )
         return undefined
     
     const seed = bip39.mnemonicToSeedSync(seedPhase)
     const root = bip32.fromSeed(seed)
-    const child = root.derivePath(path)
+    let child
+    try {
+        child = root.derivePath(path)
+    } catch (e) {
+        console.error(e)
+        return undefined
+    }
 
     const { address } = bitcoinLib.payments.p2wpkh({
         pubkey: child.publicKey,
