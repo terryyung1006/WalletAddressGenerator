@@ -22,9 +22,9 @@ describe("API testing", () => {
         })
 
         test("Failed case, input param 'path' invalid", async () => {
-            const resp = await request(app).get("/hd_segwit_address/next%20useful%20elbow%20nurse%20surround%20model%20axis%20item%20trick%20exhaust%20file%20warrior/m%2F44%27%2F60%27%2F0%27%2F0")
-            expect(resp.text).toEqual("derivation path must has 6 level")
-            expect(resp.status).toEqual(412)
+            const resp = await request(app).get("/hd_segwit_address/next%20useful%20elbow%20nurse%20surround%20model%20axis%20item%20trick%20exhaust%20file%20warrior/m%2F44%27%2F60%27%2F0%27%2F")
+            expect(resp.text).toEqual("SegWit address genration failed, please check if seed phase and path valid.")
+            expect(resp.status).toEqual(400)
         })
     })
     

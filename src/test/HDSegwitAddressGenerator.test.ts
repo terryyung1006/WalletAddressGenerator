@@ -24,13 +24,10 @@ describe("Test Hierarchical Deterministic Segregated Witness bitcoin address gen
 
     test("Failed case, invalid derivation path", async() => {
         let seedPhase = "recycle manual power sense program car car toy judge response wave chicken"
-        let path = "m/44'/60'/0'/0"
+        let path = "m/44'/60'/0'/0/"
 
         let address: string | undefined = HDSegwitAddressGenerator.generateSegwitAddress(seedPhase, path)
 
         expect(address).toBeUndefined()
-
-        let errMsg: string = HDSegwitAddressGenerator.checkPath(path)
-        expect(errMsg).toEqual("derivation path must has 6 level")
     })
 })
