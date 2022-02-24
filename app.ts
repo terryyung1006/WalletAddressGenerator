@@ -118,7 +118,7 @@ app.get('/hd_segwit_address/:seed_phase/:path', (req: Request, res: Response, ne
  *       - in: path
  *         name: public_keys
  *         required: true
- *         description: array of public keys, length should be same as n, splited by ","
+ *         description: array of public keys, length should be same as m
  *         schema:
  *             type: array
  *             items:
@@ -144,7 +144,7 @@ app.get('/p2sh_address/:n/:m/:public_keys', (req: Request, res: Response, next:N
         publicKeys = req.params.public_keys.split(",")
     } catch (e) {
         console.error(e)
-        res.status(412).send("input parametes type invalid, please check api document by /api-docs")
+        res.status(412).send("input parameters type invalid, please check api document by /api_docs")
         return
     }
     

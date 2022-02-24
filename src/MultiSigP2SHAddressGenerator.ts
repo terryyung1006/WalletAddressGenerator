@@ -44,7 +44,7 @@ export function generateMultiSigP2SHAddress(n: number, m: number, publicKeys: Ar
     const pubkeysBuffer: Buffer[] = publicKeys.map(hex => Buffer.from(hex, 'hex'))
     
     if (pubkeysBuffer.length <= 0 || pubkeysBuffer.length != m) {
-        console.error("public key buffer not equal to param m")
+        console.error("public key buffer length not equal to param m")
         return undefined
     }
 
